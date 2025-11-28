@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwapZone - Buy and Sell with Trust & Best Prices</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Navbar styles */
+        .navbar-custom {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-custom .navbar-brand {
+            color: #7b68ee;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar-custom .nav-link {
+            color: #555;
+        }
+
+        /* Product card styles */
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            background: white;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .btn-details {
+            margin-top: 10px;
+            background-color: #7b68ee;
+            border: none;
+            color: white;
+        }
+        .btn-details:hover {
+            background-color: #6a5acd;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #333;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+
+        .features-section {
+            background: white;
+            padding: 30px 0;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #7b68ee;
+        }
+
+        .trust-badge {
+            background: #e8f5e8;
+            color: #28a745;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Footer styles */
+        .footer {
+            background: white;
+            color: #666;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer h5 {
+            color: #7b68ee;
+            margin-bottom: 15px;
+        }
+
+        .footer a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #7b68ee;
+        }
+
+        .copyright {
+            background: #f8f9fa;
+            padding: 15px 0;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 30px 0;
+            }
+
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .feature-box {
+                margin-bottom: 20px;
+            }
+
+            .card-img-top {
+                height: 180px;
+            }
+
+            .search-box {
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+
+            .hero-section h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-section p.lead {
+                font-size: 1rem;
+            }
+
+            .card-body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <strong>SwapZone</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a th:href="@{/user/login}" class="nav-link">Login</a></li>
+                <li class="nav-item"><a th:href="@{/create_user}" class="nav-link">Sign Up</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold mb-3">Welcome to SwapZone</h1>
+        <p class="lead mb-4">Your Trusted Marketplace for Buying and Selling</p>
+
+        <!-- Main Search -->
+        <div class="search-box">
+            <form action="/product/search" method="get" class="d-flex">
+                <input class="form-control me-2" type="text" name="keyword" placeholder="Search for products..." required>
+                <button class="btn btn-primary" type="submit">🔍 Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container">
+    <div class="features-section">
+        <div class="row text-center">
+            <div class="col-md-4 feature-box">
+                <div class="feature-icon">🛡️</div>
+                <h4>Trusted Platform</h4>
+                <p class="text-muted">Safe and secure transactions with verified users</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <div class="feature-icon">💰</div>
+                <h4>Fair Prices</h4>
+                <p class="text-muted">Get the best value for your money when buying or selling</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <div class="feature-icon">📦</div>
+                <h4>Wide Variety</h4>
+                <p class="text-muted">Thousands of products available for every need</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Category Filter -->
+<div class="container mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="/product/search" method="get">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">Filter by Category</span>
+                    <select  class="form-select" name="keyword" >
+                        <option value="">All Categories</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="laptop">Laptop</option>
+                        <option value="car">Car</option>
+                        <option value="bike">Bike</option>
+                        <option value="electronics">Electronics</option>
+                    </select>
+                    <button class="btn btn-outline-primary" type="submit">Apply</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Products Grid -->
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2>Available Products</h2>
+            <p class="text-muted">Find great deals from trusted sellers</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4" th:each="pr,iterStat : ${p}">
+            <div class="card h-100">
+                <div class="trust-badge"></div>
+
+                <img th:src="${pr.image}" class="card-img-top" alt="Product Image">
+                <div class="card-body text-center">
+                    <h5 class="card-title" th:text="${pr.name}">Product Name</h5>
+                    <p class="card-text" th:text="${pr.description}">Product description</p>
+
+                    <div class="product-details mb-3">
+                        <p class="mb-1"><strong>Available:</strong> <span th:text="${pr.quantity}">Quantity</span> units</p>
+                        <p class="product-price mb-2" th:text="'₹' + ${pr.price}">Price</p>
+                    </div>
+
+                    <!-- Contact Seller Button -->
+                    <button class="btn btn-primary btn-details w-100"
+                            th:attr="id='toggleBtn' + ${iterStat.index}"
+                            th:onclick="'toggleDetails(' + ${iterStat.index} + ')'">
+                        Contact Seller
+                    </button>
+
+                    <!-- Seller Contact Details -->
+                    <div class="seller-info mt-3" th:attr="id='extraDetails' + ${iterStat.index}" style="display: none;">
+                        <div class="border-top pt-3">
+                            <h6>Seller Information:</h6>
+                            <p class="mb-1"><strong>📧 Email:</strong> <span th:text="${pr.email}">email</span></p>
+                            <p class="mb-1"><strong>📞 Phone:</strong> <span th:text="${pr.phone_number}">phone number</span></p>
+                            <p class="mb-0"><strong>📍 Location:</strong> <span th:text="${pr.location}">location</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5>SwapZone</h5>
+                <p>Your trusted marketplace for buying and selling products with fair prices and secure transactions.</p>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Info</h5>
+                <ul class="list-unstyled">
+                    <li>📧 support@swapzone.com</li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Copyright -->
+<div class="copyright">
+    <div class="container">
+        <p class="mb-0">&copy; 2024 SwapZone. All rights reserved.</p>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function toggleDetails(index) {
+        const details = document.getElementById('extraDetails' + index);
+        const btn = document.getElementById('toggleBtn' + index);
+        if(details.style.display === 'none') {
+            details.style.display = 'block';
+            btn.textContent = 'Hide Contact';
+        } else {
+            details.style.display = 'none';
+            btn.textContent = 'Contact Seller';
+        }
+    }
+</script>
+
+</body>
+</html>

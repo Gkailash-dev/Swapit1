@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Created - SwapZone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #7b68ee;
+            --primary-dark: #6a5acd;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --dark-text: #333;
+            --light-text: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar styles */
+        .navbar-custom {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 12px 0;
+        }
+        .navbar-custom .navbar-brand {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar-custom .nav-link {
+            color: var(--light-text);
+            font-weight: 500;
+            padding: 8px 15px;
+        }
+        .navbar-custom .nav-link:hover {
+            color: var(--primary-color);
+        }
+        .navbar-custom .navbar-toggler {
+            border: none;
+            padding: 4px 8px;
+        }
+        .navbar-custom .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            color: var(--dark-text);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(123, 104, 238, 0.1);
+        }
+
+        .success-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .btn-custom {
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 104, 238, 0.4);
+            background-color: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .welcome-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 15px 10px;
+            border-radius: 10px;
+            background: #f8f9ff;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(123, 104, 238, 0.1);
+        }
+
+        .feature-item:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .feature-item:hover .feature-icon {
+            color: var(--white);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .feature-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .trust-badge {
+            background: #e8f5e8;
+            color: #28a745;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* Footer styles */
+        .footer {
+            background: var(--white);
+            color: var(--light-text);
+            padding: 30px 0 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer h5 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .copyright {
+            background: var(--light-bg);
+            padding: 15px 0;
+            text-align: center;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+
+            .success-card {
+                padding: 30px 20px;
+            }
+
+            .success-icon {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .welcome-features {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .success-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <strong>SwapZone</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <center>
+            <div class="success-card">
+                <div class="trust-badge">
+                    <i class="fas fa-check-circle me-2"></i> Account Created Successfully
+                </div>
+
+                <div class="success-icon">
+                    <i class="fas fa-party-horn"></i>
+                </div>
+
+                <h2>Welcome to SwapZone!</h2>
+
+                <p>Your account has been created successfully! You're now part of our trusted marketplace community. Start exploring amazing deals or list your first item today.</p>
+
+                <div class="welcome-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-text">Trusted Platform</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="feature-text">Fair Prices</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="feature-text">Wide Variety</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="feature-text">Verified Users</div>
+                    </div>
+                </div>
+
+                <a href="/user/login" class="btn btn-custom">
+                    <i class="fas fa-sign-in-alt me-2"></i> Login to Continue
+                </a>
+            </div>
+        </center>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5>SwapZone</h5>
+                <p>Your trusted marketplace for buying and selling products with fair prices and secure transactions.</p>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5>Quick Links</h5>
+                <ul class="footer-links">
+
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Info</h5>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope me-2"></i> support@swapzone.com</li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Copyright -->
+<div class="copyright">
+    <div class="container">
+        <p class="mb-0">&copy; 2025 SwapZone. All rights reserved.</p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

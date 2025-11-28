@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .btn-details {
+            margin-top: 10px;
+        }
+      .text {
+  font-family: "Font Name", fallback-font, generic-family;
+}
+    </style>
+</head>
+<body>
+<nav class="bg-primary navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="#"><center>Admin Dashboard</center></a>
+
+        <div class="d-flex">
+            <a class="btn btn-outline-light" th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+</nav>
+<div class="container py-5">
+    <center>
+    <h1 class="text">Available Product</h1>
+    </center>
+    <div class="row g-4">
+        <div class="col-md-4" th:each="product, iterStat : ${products}">
+            <div class="card h-100">
+                <img th:src="${product.image}" class="card-img-top" alt="Product Image">
+                <div class="card-body text-center">
+                    <!-- Basic info -->
+                    <h5 class="card-title" th:text="${product.name}">Product Name</h5>
+                    <p class="card-text text-muted" th:text="${product.description}">Description</p>
+                    <p class="product-price" th:text="${product.quantity}">Quantity</p>
+                    <p class="product-price" th:text="'₹' + ${product.price}">Price</p>
+
+                    <!-- Button to toggle extra details -->
+                    <button class="btn btn-primary btn-details"
+                            th:attr="id='toggleBtn' + ${iterStat.index}"
+                            th:onclick="'toggleDetails(' + ${iterStat.index} + ')'">
+                        Show Details
+                    </button>
+
+                    <!-- Hidden extra details -->
+                    <div class="extra-details" th:attr="id='extraDetails' + ${iterStat.index}" style="display: none; margin-top: 10px;">
+                        <p><strong>Email:</strong> <span th:text="${product.email}">email</span></p>
+                        <p><strong>Phone Number:</strong> <span th:text="${product.phone_number}">phone number</span></p>
+                        <p><strong>Location:</strong> <span th:text="${product.location}">location</span></p>
+                    </div>
+
+                    <!-- Delete link -->
+                    <a class="d-block mt-2 text-danger" th:href="@{/admin/delete/product/{id}(id=${product.id})}">
+                        Delete product
+                    </a>
+                </div>
+                <div class="card-footer text-center bg-white border-0">
+                    <!-- Optional footer content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function toggleDetails(index) {
+        const details = document.getElementById('extraDetails' + index);
+        const btn = document.getElementById('toggleBtn' + index);
+        if(details.style.display === 'none') {
+            details.style.display = 'block';
+            btn.textContent = 'Hide Details';
+        } else {
+            details.style.display = 'none';
+            btn.textContent = 'Show Details';
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New User</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .form-container h1 {
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #6a5acd;
+            outline: none;
+            box-shadow: 0 0 5px rgba(106, 90, 205, 0.4);
+        }
+
+        button {
+            width: 100%;
+            background: #6a5acd;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5a4abc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .success-message {
+            color: #28a745;
+            margin-top: 15px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .form-container {
+                padding: 25px;
+                max-width: 100%;
+            }
+
+            .form-container h1 {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            .form-group input {
+                padding: 14px 12px;
+            }
+
+            button {
+                padding: 16px;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                padding-top: 30px;
+            }
+
+            .form-container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .form-container h1 {
+                font-size: 1.5rem;
+                margin-bottom: 18px;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input {
+                padding: 12px 10px;
+                font-size: 0.95rem;
+            }
+
+            button {
+                padding: 14px;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .form-container {
+                max-width: 500px;
+                padding: 40px;
+            }
+
+            .form-container h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animation for messages */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-message, .error-message {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Password strength indicator */
+        .strength-meter {
+            height: 5px;
+            border-radius: 5px;
+            margin-top: 5px;
+            background-color: #eee;
+            overflow: hidden;
+        }
+
+        .strength-meter::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .strength-weak::after {
+            width: 33%;
+            background-color: #e74c3c;
+        }
+
+        .strength-medium::after {
+            width: 66%;
+            background-color: #f39c12;
+        }
+
+        .strength-strong::after {
+            width: 100%;
+            background-color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1>Add New User</h1>
+
+    <form th:action="@{/register}" method="post">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="Username" required placeholder="Enter username">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="Email" required placeholder="Enter email address">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" minlength="4" name="Password" required placeholder="Enter password">
+            <div class="password-strength">Minimum 4 characters required</div>
+            <div class="strength-meter"></div>
+        </div>
+
+        <input type="hidden" name="Role" value="USER">
+
+        <button type="submit">Create User</button>
+    </form>
+    <p class="success-message">User created successfully!</p>
+    <p class="error-message">Please check all fields and try again.</p>
+</div>
+
+<script>
+    // Form validation and UX enhancements
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('userForm');
+        const passwordInput = document.getElementById('password');
+        const strengthMeter = document.querySelector('.strength-meter');
+        const successMessage = document.querySelector('.success-message');
+        const errorMessage = document.querySelector('.error-message');
+
+        // Password strength indicator
+        passwordInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+            let strength = '';
+
+            if (password.length === 0) {
+                strength = '';
+            } else if (password.length < 4) {
+                strength = 'weak';
+            } else if (password.length < 8) {
+                strength = 'medium';
+            } else {
+                strength = 'strong';
+            }
+
+            // Update strength meter
+            strengthMeter.className = 'strength-meter';
+            if (strength) {
+                strengthMeter.classList.add('strength-' + strength);
+            }
+        });
+
+        // Form submission handler
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Basic validation
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Hide any previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // For demo purposes, simulate form submission
+            if (username && email && password.length >= 4) {
+                // Show success message
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+
+                // In a real application, you would submit the form here
+                console.log('Form submitted successfully');
+
+                // Reset form after delay
+                setTimeout(function() {
+                    form.reset();
+                    strengthMeter.className = 'strength-meter';
+                    successMessage.style.display = 'none';
+                }, 3000);
+            } else {
+                // Show error message
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            }
+        });
+
+        // Clear error message when user starts typing
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                errorMessage.style.display = 'none';
+            });
+        });
+    });
+</script>
+</body>
+</html>

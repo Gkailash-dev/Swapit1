@@ -1,0 +1,10 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "java -jar target/swapzone-0.0.1-SNAPSHOT.jar"
+
+[[services]]
+name = "web"
+[[services.ports]]
+port = 8080
